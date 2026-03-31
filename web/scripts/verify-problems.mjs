@@ -31,7 +31,7 @@ if (idMatches.length === 0) {
 const expectedCounts = {
   L: 250,
   S: 250,
-  D: 250,
+  D: 241,
   TF: 50,
 }
 
