@@ -1,0 +1,9 @@
+.venv/
+.idea/
+__pycache__/
+*.pyc
+
+# Vite/Node
+web/node_modules/
+web/dist/
+
