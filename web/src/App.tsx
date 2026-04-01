@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import CodeMirror from '@uiw/react-codemirror'
 import { python } from '@codemirror/lang-python'
+import { vscodeDark } from '@uiw/codemirror-theme-vscode'
 import {
   PROBLEMS,
   SECTION_COUNTS,
@@ -37,9 +38,19 @@ function App() {
   const [progress, setProgress] = useState<ProgressMap>(() => loadProgress())
   const [selectedId, setSelectedId] = useState<string>(PROBLEMS[0]?.id ?? '')
   const [search, setSearch] = useState('')
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    const saved = localStorage.getItem('nemo-800-theme')
+    return saved === 'light' ? 'light' : 'dark'
+  })
   const [sectionFilter, setSectionFilter] = useState<SectionFilter>('All')
   const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilter>('All')
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('All')
+
+  useEffect(() => {
+    localStorage.setItem('nemo-800-theme', theme)
+    document.body.style.backgroundColor =
+      theme === 'dark' ? '#1c1c1c' : '#f1f5f9'
+  }, [theme])
 
   useEffect(() => {
     saveProgress(progress)
@@ -118,17 +129,28 @@ function App() {
   }
 
   return (
-    <div className="app-shell">
+    <div className={`app-shell ${theme}`}>
       <header className="topbar">
         <div>
           <h1>nemo-800</h1>
           <p>Practice from easiest to hardest in one web workspace.</p>
         </div>
-        <div className="topbar-stats">
-          <span>Total: {TOTAL_PROBLEMS}</span>
-          <span>In Progress: {inProgressCount}</span>
-          <span>Solved: {solvedCount}</span>
-          <span>Complete: {completionPercent}%</span>
+        <div className="topbar-right">
+          <div className="topbar-stats">
+            <span>Total: {TOTAL_PROBLEMS}</span>
+            <span>In Progress: {inProgressCount}</span>
+            <span>Solved: {solvedCount}</span>
+            <span>Complete: {completionPercent}%</span>
+          </div>
+          <button
+            className="theme-toggle"
+            type="button"
+            onClick={() =>
+              setTheme((current) => (current === 'dark' ? 'light' : 'dark'))
+            }
+          >
+            {theme === 'dark' ? 'Switch to Light' : 'Switch to Dark'}
+          </button>
         </div>
       </header>
 
@@ -247,6 +269,7 @@ function App() {
                   value={selectedProgress.code}
                   height="320px"
                   extensions={[python()]}
+                  theme={theme === 'dark' ? vscodeDark : 'light'}
                   basicSetup={{
                     lineNumbers: true,
                     foldGutter: true,

@@ -1,14 +1,51 @@
 * {
   box-sizing: border-box;
 }
+
+:root {
+  --bg: #1c1c1c;
+  --bg-panel: #242424;
+  --bg-panel-soft: #2a2a2a;
+  --bg-hover: #2f2f2f;
+  --bg-selected: rgba(37, 99, 235, 0.25);
+  --text: #ffffff;
+  --text-muted: #d1d5db;
+  --border: #3f3f46;
+  --blue: #3b82f6;
+}
+
+.app-shell.dark {
+  --bg: #1c1c1c;
+  --bg-panel: #242424;
+  --bg-panel-soft: #2a2a2a;
+  --bg-hover: #2f2f2f;
+  --bg-selected: rgba(37, 99, 235, 0.25);
+  --text: #ffffff;
+  --text-muted: #d1d5db;
+  --border: #3f3f46;
+  --blue: #3b82f6;
+}
+
+.app-shell.light {
+  --bg: #f1f5f9;
+  --bg-panel: #ffffff;
+  --bg-panel-soft: #f8fafc;
+  --bg-hover: #f1f5f9;
+  --bg-selected: rgba(37, 99, 235, 0.12);
+  --text: #0f172a;
+  --text-muted: #475569;
+  --border: #cbd5e1;
+  --blue: #2563eb;
+}
+
 .app-shell {
   display: flex;
   flex-direction: column;
   gap: 16px;
   min-height: 100vh;
   padding: 16px;
-  background: #f1f5f9;
-  color: #0f172a;
+  background: var(--bg);
+  color: var(--text);
   text-align: left;
 }
 .topbar {
@@ -24,7 +61,7 @@
 }
 .topbar p {
   margin-top: 6px;
-  color: #475569;
+  color: var(--text-muted);
 }
 .topbar-stats {
   display: grid;
@@ -32,13 +69,20 @@
   gap: 8px;
   min-width: 280px;
 }
+
+.topbar-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
 .topbar-stats span,
 .section-summary span {
-  border: 1px solid #dbe2ea;
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 8px 10px;
   font-size: 0.9rem;
-  background: #f8fafc;
+  background: var(--bg-panel-soft);
 }
 .section-summary {
   display: grid;
@@ -53,11 +97,29 @@
 .filters input,
 .filters select {
   padding: 10px 12px;
-  background: #fff;
-  color: #0f172a;
-  border: 1px solid #cbd5e1;
+  background: var(--bg-panel);
+  color: var(--text);
+  border: 1px solid var(--border);
   border-radius: 8px;
   font: inherit;
+}
+
+.filters input::placeholder {
+  color: var(--text-muted);
+}
+
+.theme-toggle {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-panel-soft);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  border-color: var(--blue);
 }
 .workspace {
   display: grid;
@@ -67,16 +129,16 @@
 }
 .problem-list,
 .editor-panel {
-  border: 1px solid #dbe2ea;
+  border: 1px solid var(--border);
   border-radius: 12px;
-  background: #fff;
+  background: var(--bg-panel);
   overflow: hidden;
 }
 .panel-title {
   padding: 12px;
   font-weight: 600;
-  border-bottom: 1px solid #e2e8f0;
-  background: #f8fafc;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-panel-soft);
 }
 .problem-list ul {
   list-style: none;
@@ -91,8 +153,8 @@
 .problem-list button {
   width: 100%;
   text-align: left;
-  background: #fff;
-  color: #0f172a;
+  background: var(--bg-panel);
+  color: var(--text);
   border: 1px solid transparent;
   padding: 10px;
   display: grid;
@@ -102,11 +164,11 @@
   font: inherit;
 }
 .problem-list button:hover {
-  background: #f8fafc;
+  background: var(--bg-hover);
 }
 .problem-list button.active {
-  border-color: #2563eb;
-  background: #eff6ff;
+  border-color: var(--blue);
+  background: var(--bg-selected);
 }
 .problem-list button strong {
   font-size: 0.85rem;
@@ -116,7 +178,7 @@
 }
 .problem-list button em {
   font-size: 0.8rem;
-  color: #475569;
+  color: var(--text-muted);
   font-style: normal;
 }
 .editor-panel {
@@ -131,7 +193,7 @@
 }
 .problem-meta p {
   margin-top: 8px;
-  color: #475569;
+  color: var(--text-muted);
 }
 .status-row {
   display: flex;
@@ -146,24 +208,24 @@
 .status-buttons button,
 .actions button {
   padding: 8px 12px;
-  background: #fff;
-  color: #0f172a;
-  border: 1px solid #cbd5e1;
+  background: var(--bg-panel-soft);
+  color: var(--text);
+  border: 1px solid var(--border);
   border-radius: 8px;
   font: inherit;
   cursor: pointer;
 }
 .status-buttons .selected {
-  border-color: #2563eb;
-  background: #eff6ff;
-  color: #2563eb;
+  border-color: var(--blue);
+  background: var(--bg-selected);
+  color: #93c5fd;
 }
 .editor-label {
   font-weight: 600;
   font-size: 0.9rem;
 }
 .code-editor {
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--border);
   border-radius: 8px;
   overflow: hidden;
 }
@@ -179,17 +241,21 @@
   padding: 10px;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 14px;
-  background: #fff;
-  color: #0f172a;
-  border: 1px solid #cbd5e1;
+  background: var(--bg-panel);
+  color: var(--text);
+  border: 1px solid var(--border);
   border-radius: 8px;
+}
+
+.editor-panel textarea::placeholder {
+  color: var(--text-muted);
 }
 .actions {
   display: flex;
   justify-content: space-between;
   gap: 12px;
   align-items: center;
-  color: #475569;
+  color: var(--text-muted);
   font-size: 0.9rem;
   flex-wrap: wrap;
 }
@@ -203,5 +269,9 @@
   }
   .problem-list ul {
     max-height: 300px;
+  }
+
+  .topbar-right {
+    align-items: flex-start;
   }
 }
